@@ -6,10 +6,11 @@ class BookList extends Component {
   static propTypes = {
     books: PropTypes.array.isRequired,
     shelf: PropTypes.string.isRequired,
-  };
+    onUpdateShelf: PropTypes.func,
+  }
 
   render() {
-    const { books, shelf } = this.props;
+    const { books, shelf, onUpdateShelf } = this.props;
     let booksOfTheCurrentShelf = [];
 
     if (books.length > 0) {
@@ -27,7 +28,9 @@ class BookList extends Component {
                 <div className="book-top">
                   <div className="book-cover" style={{ width: 128, height: 188, backgroundImage: `url("${book.imageLinks.thumbnail}")` }}></div>
                   <div className="book-shelf-changer">
-                    <select>
+                    <select value={shelf} onChange={(event) => {
+                      onUpdateShelf(event.target.value, book)
+                    }}>
                       <option value="move" disabled>Move to...</option>
                       <option value="currentlyReading">Currently Reading</option>
                       <option value="wantToRead">Want to Read</option>

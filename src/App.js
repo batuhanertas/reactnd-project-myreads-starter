@@ -16,6 +16,10 @@ class BooksApp extends React.Component {
   }
 
   componentDidMount() {
+    this.getAllBooks();
+  }
+
+  getAllBooks = () => {
     BooksAPI.getAll().then( (books) => {
       this.setState( () => ({
         books
@@ -23,10 +27,14 @@ class BooksApp extends React.Component {
     })
   }
 
+  updateShelf = (shelf, book) => {
+    BooksAPI.update(book, shelf).then( () => {
+      this.getAllBooks();
+    })
+  }
+
 
   render() {
-    console.log("books are: " + this.state.books);
-    console.log(BooksAPI.getAll());
     return (
       <div className="app">
         {this.state.showSearchPage ? (
@@ -60,18 +68,21 @@ class BooksApp extends React.Component {
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Currently Reading</h2>
                   <BookList
+                    onUpdateShelf={this.updateShelf}
                     shelf="currentlyReading"
                     books={this.state.books}/>
                 </div>
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Want to Read</h2>
                   <BookList
+                    onUpdateShelf={this.updateShelf}
                     shelf="wantToRead"
                     books={this.state.books}/>
                 </div>
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Read</h2>
                   <BookList
+                    onUpdateShelf={this.updateShelf}
                     shelf="read"
                     books={this.state.books}/>
                 </div>
