@@ -10,11 +10,17 @@ class BookList extends Component {
     onUpdateShelf: PropTypes.func,
   }
 
+  findShelf = (book) => {
+    return book.shelf ? book.shelf : 'none';
+  }
+
   render() {
     const { books, shelf, onUpdateShelf } = this.props;
     let booksOfTheCurrentShelf = [];
 
-    if (books.length > 0) {
+    if (books.length > 0 && shelf.toString() === 'searchPage') {
+      booksOfTheCurrentShelf = books
+    } else if (books.length > 0 && shelf.toString() !== 'searchPage') {
       booksOfTheCurrentShelf = books.filter( (book) => (
         book.shelf === shelf
       ));
@@ -29,7 +35,7 @@ class BookList extends Component {
                 <div className="book-top">
                   <div className="book-cover" style={{ width: 128, height: 188, backgroundImage: `url("${book.imageLinks.thumbnail}")` }}></div>
                   <div className="book-shelf-changer">
-                    <select value={shelf} onChange={(event) => {
+                    <select value={this.findShelf(book)} onChange={(event) => {
                       onUpdateShelf(event.target.value, book)
                     }}>
                       <option value="move" disabled>Move to...</option>
