@@ -37,12 +37,29 @@ class BooksApp extends React.Component {
       return;
     }
     BooksAPI.search(query).then( (searchResults) => {
+      searchResults = this.setShelfForExistingBooks(this.state.books, searchResults)
       this.setState( () => ({
         searchResults: searchResults
       }))
     })
   }
 
+  setShelfForExistingBooks = (currentBooks, searchedBooks) => {
+    if (!searchedBooks || !currentBooks) {
+      return [];
+    }
+    currentBooks.forEach( currentBook => {
+      let index = 0
+
+      while (index < searchedBooks.length) {
+        if (currentBook.id === searchedBooks[index].id) {
+          searchedBooks[index].shelf = currentBook.shelf
+        }
+        index++
+      }
+    })
+    return searchedBooks
+  }
 
   render() {
     return (
