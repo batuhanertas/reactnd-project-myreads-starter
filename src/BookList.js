@@ -8,15 +8,27 @@ class BookList extends Component {
     books: PropTypes.array.isRequired,
     shelf: PropTypes.string.isRequired,
     onUpdateShelf: PropTypes.func,
-  }
+  };
 
+  /**
+   * @description  - Finds the shelf of a given book. If the book doesn't have any shelf, it is assigned automatically
+   *                 to the 'none' shelf.
+   * @param book   - the given book
+   * @returns      - shelf of the given book
+   */
   findShelf = (book) => {
     return book.shelf ? book.shelf : 'none';
-  }
+  };
 
+  /**
+   * @description  - Gets the image link and returns it as string. If the image link cannot be found,
+   *                 returns an empty string
+   * @param book   - the given book
+   * @returns      - link of the image
+   */
   findThumbnail = (book) => {
     return book.imageLinks && book.imageLinks.thumbnail ? book.imageLinks.thumbnail : ''
-  }
+  };
 
   render() {
     const { books, shelf, onUpdateShelf } = this.props;

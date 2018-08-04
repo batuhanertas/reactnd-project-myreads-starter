@@ -9,7 +9,7 @@ class BooksApp extends React.Component {
   state = {
     books: [],
     searchResults: []
-  }
+  };
 
   componentDidMount() {
     this.getAllBooks();
@@ -21,19 +21,19 @@ class BooksApp extends React.Component {
         books: books
       }))
     })
-  }
+  };
 
   updateShelf = (shelf, book) => {
     BooksAPI.update(book, shelf).then( () => {
       this.getAllBooks();
     })
-  }
+  };
 
   onSearch = (query) => {
     if (!query) {
       this.setState( () => ({
         searchResults: []
-      }))
+      }));
       return;
     }
     BooksAPI.search(query).then( (searchResults) => {
@@ -42,14 +42,23 @@ class BooksApp extends React.Component {
         searchResults: searchResults
       }))
     })
-  }
+  };
 
+  /**
+   * @description         - Compares the existing books with result of the search query.
+   *                        If the search results contains books, which are same with the existing ones,
+   *                        updates the shelf of these books accordingly
+   *
+   * @param currentBooks  - current books in the shelves
+   * @param searchedBooks - result of the search query
+   * @returns             - array of search results with updated shelves
+   */
   setShelfForExistingBooks = (currentBooks, searchedBooks) => {
     if (!searchedBooks || !currentBooks) {
       return [];
     }
     currentBooks.forEach( currentBook => {
-      let index = 0
+      let index = 0;
 
       while (index < searchedBooks.length) {
         if (currentBook.id === searchedBooks[index].id) {
@@ -57,9 +66,9 @@ class BooksApp extends React.Component {
         }
         index++
       }
-    })
-    return searchedBooks
-  }
+    });
+    return searchedBooks;
+  };
 
   render() {
     return (

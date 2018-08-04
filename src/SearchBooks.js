@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import BookList from "./BookList";
+import BookList from './BookList';
 
 class SearchBooks extends Component {
 
   handleChange = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (this.props.onSearch) {
       this.props.onSearch(e.target.value)
     }
-  }
+  };
 
   componentWillUnmount() {
     this.props.onSearch('');
