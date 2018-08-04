@@ -22,7 +22,7 @@ class SearchBooks extends Component {
         <div className="search-books-bar">
           <Link to='/'  className="close-search"> Close </Link>
           <div className="search-books-input-wrapper">
-            <input onChange={(e) => this.handleChange(e)} type="text" placeholder="Search by title or author"/>
+            <input onKeyUp={(e) => this.handleChange(e)} type="text" placeholder="Search by title or author"/>
           </div>
         </div>
         <div className="search-books-results">
