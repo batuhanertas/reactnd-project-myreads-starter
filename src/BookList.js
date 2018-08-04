@@ -14,6 +14,10 @@ class BookList extends Component {
     return book.shelf ? book.shelf : 'none';
   }
 
+  findThumbnail = (book) => {
+    return book.imageLinks && book.imageLinks.thumbnail ? book.imageLinks.thumbnail : ''
+  }
+
   render() {
     const { books, shelf, onUpdateShelf } = this.props;
     let booksOfTheCurrentShelf = [];
@@ -33,7 +37,8 @@ class BookList extends Component {
             <li key={book.id}>
               <div className="book">
                 <div className="book-top">
-                  <div className="book-cover" style={{ width: 128, height: 188, backgroundImage: `url("${book.imageLinks.thumbnail}")` }}></div>
+                  <div className="book-cover"
+                       style={{ width: 128, height: 188, backgroundImage: `url("${this.findThumbnail(book)}")` }}></div>
                   <div className="book-shelf-changer">
                     <select value={this.findShelf(book)} onChange={(event) => {
                       onUpdateShelf(event.target.value, book)
